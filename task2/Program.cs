@@ -38,48 +38,47 @@ void PrintMatrix(int[,] matrix)
     }
 }
 
+int SumLineElements(int[,] array, int i)
+{
+    int sumLine = array[i, 0];
+    for (int j = 1; j < array.GetLength(1); j++)
+    {
+        sumLine += array[i, j];
+    }
+    return sumLine;
+}
+
 //ВВод данных
 int[] ReadInt(string text)
 {
     System.Console.Write(text);
     return Array.ConvertAll(Console.ReadLine()!.Split(" "), int.Parse); ;
 }
-
-
-void SumLineElements(int[,] matrix)
+int[] size = ReadInt("Задайте количество строк и столбцов через пробел: ");
+int[,] matrix = Fillmatrix(size[0], size[1], 0, 9);
+int minSumLine = 0;
+int sumLine = SumLineElements(matrix, 0);
+for (int i = 1; i < matrix.GetLength(0); i++)
 {
-    int tempSumLine = 0;
-    int minSumLine = 0;
-    int sumLine = 0;
-    for (int i = 1; i < matrix.GetLength(0); i++)
+    int tempSumLine = SumLineElements(matrix, i);
+    if (sumLine > tempSumLine)
     {
-        for (int j = 1; j < matrix.GetLength(1); j++)
-        {
-            if (sumLine > tempSumLine)
-            {
-                sumLine = tempSumLine;
-                minSumLine = i;
-            }
-            sumLine += matrix[i, j];
-        }
-        return;
+        sumLine = tempSumLine;
+        minSumLine = i;
     }
-    Console.WriteLine($"\n{minSumLine + 1} - строкa с наименьшей суммой ({sumLine}) элементов ");
 }
 
 
 
-
-
-
-
-int[] size = ReadInt("Задайте количество строк и столбцов через пробел: ");
-int[,] matrix = Fillmatrix(size[0], size[1], 0, 9);
-
 PrintMatrix(matrix);
+Console.WriteLine($"\n{minSumLine + 1} - строкa с наименьшей суммой ({sumLine}) ");
 
 
-System.Console.WriteLine();
-SumLineElements(matrix);
-System.Console.WriteLine();
-PrintMatrix(matrix);
+
+
+
+
+
+
+
+
